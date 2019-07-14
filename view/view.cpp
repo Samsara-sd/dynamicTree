@@ -95,18 +95,18 @@ ViewClass::ViewClass(QWidget *parent)
 
     LeftRotate = new QLabel(this);
     LeftRotate->setFixedSize(80, 100);
-    LeftRotate->setStyleSheet("QLabel{border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/LeftRotate.png);}");
+    LeftRotate->setStyleSheet("QLabel{border-image:url(:/view/images/LeftRotate.png);}");
     LeftRotate->setHidden(true);
 
 
     RightRotate = new QLabel(this);
     RightRotate->setFixedSize(80, 100);
-    RightRotate->setStyleSheet("QLabel{border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/RightRotate.png);}");
+    RightRotate->setStyleSheet("QLabel{border-image:url(:/view/images/RightRotate.png);}");
     RightRotate->setHidden(true);
 
     setWindowTitle(tr("Styles"));
 
-    this->setStyleSheet("QDialog{border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/bg4.jpeg)}");
+    this->setStyleSheet("QDialog{border-image:url(:/view/images/bg4.jpeg)}");
 }
 
 void ViewClass::createDataBox()
@@ -120,13 +120,13 @@ void ViewClass::createDataBox()
     for(i = 0; i < 11; i++)
     {
         placeholder[i] = new QPushButton(tr(""));
-        placeholder[i]->setStyleSheet("QPushButton{height:40px;width:30px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/white.png)}");
+        placeholder[i]->setStyleSheet("QPushButton{height:40px;width:30px;border-image:url(:/view/images/white.png)}");
         layout->addWidget(placeholder[i], i, 33, 1, 1);
     }
     for(i = 0; i < 32; i++)
     {
         placeholder[i+11] = new QPushButton(tr(""));
-        placeholder[i+11]->setStyleSheet("QPushButton{height:10px;width:30px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/white.png)}");
+        placeholder[i+11]->setStyleSheet("QPushButton{height:10px;width:30px;border-image:url(:/view/images/white.png)}");
         layout->addWidget(placeholder[i+11], 11, i, 1, 1);
     }
     for(i = 0; i < 6; i++)
@@ -134,7 +134,7 @@ void ViewClass::createDataBox()
         for(j = 0; j < n; j++)
         {
             node[n-1+j] = new QPushButton(tr(""));
-            node[n-1+j]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/node.png);}");
+            node[n-1+j]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(:/view/images/node.png);}");
             node[n-1+j]->setHidden(true);
 
             layout->addWidget(node[n-1+j], i*2, j*intpow(2,(5-i)), 1, intpow(2,(5-i)), Qt::AlignHCenter);
@@ -144,8 +144,8 @@ void ViewClass::createDataBox()
                 {
                     line[n-1+j] = new QLabel(this);
                     line[n-1+j]->setScaledContents(true);
-                    if(i<3) line[n-1+j]->setStyleSheet("QLabel{border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/line2__.png);}");
-                    else line[n-1+j]->setStyleSheet("QLabel{border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/line2_.png);}");
+                    if(i<3) line[n-1+j]->setStyleSheet("QLabel{border-image:url(:/view/images/line2__.png);}");
+                    else line[n-1+j]->setStyleSheet("QLabel{border-image:url(:/view/images/line2_.png);}");
                     line[n-1+j]->setHidden(true);
                     layout->addWidget(line[n-1+j], i*2-1, j*intpow(2,(5-i)), 1, intpow(2,(5-i)));
                 }
@@ -153,8 +153,8 @@ void ViewClass::createDataBox()
                 {
                     line[n-1+j] = new QLabel(this);
                     line[n-1+j]->setScaledContents(true);
-                    if(i<3) line[n-1+j]->setStyleSheet("QLabel{border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/line1__.png);}");
-                    else line[n-1+j]->setStyleSheet("QLabel{border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/line1_.png);}");
+                    if(i<3) line[n-1+j]->setStyleSheet("QLabel{border-image:url(:/view/images/line1__.png);}");
+                    else line[n-1+j]->setStyleSheet("QLabel{border-image:url(:/view/images/line1_.png);}");
                     line[n-1+j]->setHidden(true);
                     layout->addWidget(line[n-1+j], i*2-1, (j)*intpow(2,(5-i)), 1, intpow(2,(5-i)));
 
@@ -327,31 +327,31 @@ void ViewClass::changeNodeFunction()
     else if (color == 1)
     {
         node[num]->setHidden(false);
-        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/node.png);}");
+        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(:/view/images/node.png);}");
         node[num]->repaint();
     }
     else if (color == 2)
     {
         node[num]->setHidden(false);
-        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/nodeflash.png);}");
+        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(:/view/images/nodeflash.png);}");
         node[num]->repaint();
     }
     else if (color == 3 )
     {
         node[num]->setHidden(false);
-        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/nodeinsert.png);}");
+        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(:/view/images/nodeinsert.png);}");
         node[num]->repaint();
     }
     else if (color == 4)
     {
         node[num]->setHidden(false);
-        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/nodedelete.png);}");
+        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(:/view/images/nodedelete.png);}");
         node[num]->repaint();
     }
     else if (color == 5)
     {
         node[num]->setHidden(false);
-        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(D:/QQ/1521211617/FileRecv/dynamicTree/view/images/nodefind.png);}");
+        node[num]->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px;height:50px;width:50px;border-image:url(:/view/images/nodefind.png);}");
         node[num]->repaint();
     }
     if(color != 0 && num != 0)

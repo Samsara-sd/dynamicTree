@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+RC_ICONS += icon.ico
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -75,16 +76,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    view/images/bg.jpg \
-    view/images/bg2.jpg \
-    view/images/bg3.jpg \
     view/images/bg4.jpeg \
-    view/images/1.png \
     view/images/LeftRotate.png \
-    view/images/line1.png \
     view/images/line1_.png \
     view/images/line1__.png \
-    view/images/line2.png \
     view/images/line2_.png \
     view/images/line2__.png \
     view/images/node.png \
@@ -94,3 +89,6 @@ DISTFILES += \
     view/images/nodeinsert.png \
     view/images/RightRotate.png \
     view/images/white.png
+
+RESOURCES += \
+    images.qrc

@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/">
+        <file>view/images/bg4.jpeg</file>
+        <file>view/images/LeftRotate.png</file>
+        <file>view/images/line1_.png</file>
+        <file>view/images/line1__.png</file>
+        <file>view/images/line2_.png</file>
+        <file>view/images/line2__.png</file>
+        <file>view/images/node.png</file>
+        <file>view/images/nodedelete.png</file>
+        <file>view/images/nodefind.png</file>
+        <file>view/images/nodeflash.png</file>
+        <file>view/images/nodeinsert.png</file>
+        <file>view/images/RightRotate.png</file>
+        <file>view/images/white.png</file>
+    </qresource>
+</RCC>
