@@ -62,7 +62,7 @@ ViewClass::ViewClass(QWidget *parent)
     ChooseFileButton = new QPushButton(tr("ChooseFile"));
     ChooseFileButton->setDefault(false);
     connect(ChooseFileButton, SIGNAL(clicked()),this, SLOT(ChooseFileAction()));
-    ChooseFileButton->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px; height:35px;width:100px;background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #FFB7DD, stop:0.5 #505050, stop:0.98 #FFB7DD);border:0px;border-radius:4px;color:white;}QPushButton:hover{background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #FF88C2, stop:0.5 #505050, stop:0.98 #FF88C2);}");
+    ChooseFileButton->setStyleSheet("QPushButton{font: large \"Calibri\";font-size:25px; height:35px;width:140px;background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #FFB7DD, stop:0.5 #505050, stop:0.98 #FFB7DD);border:0px;border-radius:4px;color:white;}QPushButton:hover{background:qlineargradient(spread:pad, x1:0, y1:1, x2:0, y2:0, stop:0 #FF88C2, stop:0.5 #505050, stop:0.98 #FF88C2);}");
 
     createDataBox();
 
@@ -83,6 +83,7 @@ ViewClass::ViewClass(QWidget *parent)
     optionLayout->addWidget(PreOrderButton);
     optionLayout->addWidget(InOrderButton);
     optionLayout->addWidget(PostOrderButton);
+    optionLayout->addWidget(ChooseFileButton);
     optionLayout->addStretch(1);
 
 
@@ -184,8 +185,8 @@ void ViewClass::ChooseFileAction()
         int num;
         while(fin >> num)
         {
-            m_cmdFind->SetParameter(num);
-            m_cmdFind->Exec();
+            m_cmdInsert->SetParameter(num);
+            m_cmdInsert->Exec();
             //Sleep(600);
         }
     }
