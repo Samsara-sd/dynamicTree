@@ -3,7 +3,6 @@ using ElementType = int;
 
 #include <string>
 #include <vector>
-#include <QtDebug>
 
 class TreeNode
 {
@@ -16,12 +15,6 @@ class TreeNode
             Factor = 0;
             Index = index;
         }
-
-        TreeNode(const TreeNode& src);
-        TreeNode(TreeNode&& src);
-
-        TreeNode& operator=(const TreeNode& src);
-        TreeNode& operator=(TreeNode&& src);
 
         ElementType Value;
         TreeNode* LeftChild;

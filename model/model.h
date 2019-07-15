@@ -1,9 +1,9 @@
 #pragma once
 
-#include "common/etlbase.h"
-#include "common/treeInfo.h"
-#include "common/common.h"
+#include "../common/etlbase.h"
+#include "../common/treeInfo.h"
 
+typedef enum {BST, AVL, Splay, MinH, MaxH} controlMode;
 
 class ModelClass : public Proxy_PropertyNotification<ModelClass>
 {

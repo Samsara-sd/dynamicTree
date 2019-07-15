@@ -1,5 +1,5 @@
 #include "parameters.h"
-#include <QtDebug>
+
 NodeState::NodeState() throw()
 {
 }
