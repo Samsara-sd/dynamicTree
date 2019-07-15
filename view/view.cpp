@@ -1,6 +1,5 @@
 #include "view.h"
 
-
 ViewClass::ViewClass(QWidget *parent)
     : QDialog(parent), m_sinkProperty(std::make_shared<MainWindowPropertySink>(this)),
       m_sinkCommand(std::make_shared<MainWindowCommandSink>(this))

@@ -11,11 +11,8 @@ MainWindowCommandSink::MainWindowCommandSink(ViewClass* pW) throw() : m_pW(pW)
 void MainWindowCommandSink::OnCommandComplete(const std::string& str, bool bOK)
 {
     if( str == "Insert" ) {
-		if( !bOK ) {
-            //AtlMessageBox(NULL, _T("error query"), _T("error"), MB_OK);
-		}
+        if( !bOK );
 	}
-
     else if( str == "Find" || str == "Delete" )
     {
         if( !bOK )
@@ -26,5 +23,4 @@ void MainWindowCommandSink::OnCommandComplete(const std::string& str, bool bOK)
             int res = box.exec();
         }
     }
-
 }

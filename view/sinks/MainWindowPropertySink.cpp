@@ -14,5 +14,4 @@ void MainWindowPropertySink::OnPropertyChanged(const std::string& str)
     else if( str == "Rotate_Node" ) {
         m_pW->RotateFunction();
     }
-
 }

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "common/parameters.h"
-#include "common/common.h"
+#include "../common/parameters.h"
+#include "../common/common.h"
+#include "../common/etlbase.h"
 
 #include "sinks/MainWindowPropertySink.h"
 #include "sinks/MainWindowCommandSink.h"
@@ -26,7 +27,6 @@
 #include <string>
 #include <memory>
 
-QT_BEGIN_NAMESPACE
 class QCheckBox;
 class QComboBox;
 class QDateTimeEdit;
@@ -43,7 +43,7 @@ class QSpinBox;
 class QTabWidget;
 class QTableWidget;
 class QTextEdit;
-QT_END_NAMESPACE
+
 
 class ViewClass: public QDialog
 {
@@ -79,7 +79,7 @@ class ViewClass: public QDialog
         void ChooseFileAction();
 
 
-    private:
+    public:
 
         std::shared_ptr<NodeState> ChangeNode;
 
