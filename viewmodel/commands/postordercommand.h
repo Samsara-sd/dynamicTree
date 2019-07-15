@@ -1,8 +1,8 @@
 #ifndef POSTORDERCOMMAND_H
 #define POSTORDERCOMMAND_H
 
-#include "../common/etlbase.h"
-#include "../common/parameters.h"
+#include "common/etlbase.h"
+#include "common/parameters.h"
 
 class ViewModelClass;
 

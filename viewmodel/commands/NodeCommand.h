@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../common/etlbase.h"
-#include "../common/parameters.h"
+#include "common/etlbase.h"
+#include "common/parameters.h"
 
 class ViewModelClass;
 

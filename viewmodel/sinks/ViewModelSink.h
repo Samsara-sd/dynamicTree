@@ -2,7 +2,7 @@
 #define VIEWMODELSINK_H
 
 
-#include "../common/etlbase.h"
+#include "common/etlbase.h"
 
 class ViewModelClass;
 

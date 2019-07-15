@@ -153,7 +153,7 @@ void ViewModelClass::nodeFlash()
 
     Fire_OnPropertyChanged("Change_Node");
 
-    //Sleep(600);
+    Sleep(600);
 
     State->set_state(NodeColor::normal);
     Fire_OnPropertyChanged("Change_Node");
@@ -172,7 +172,7 @@ void ViewModelClass::nodeInsert()
 
     Fire_OnPropertyChanged("Change_Node");
 
-    //Sleep(1500);
+    Sleep(1500);
 
     State->set_state(NodeColor::normal);
     Fire_OnPropertyChanged("Change_Node");
@@ -191,7 +191,7 @@ void ViewModelClass::nodeFind()
 
     Fire_OnPropertyChanged("Change_Node");
 
-    //Sleep(1500);
+    Sleep(1500);
 
     State->set_state(NodeColor::normal);
     Fire_OnPropertyChanged("Change_Node");
@@ -210,7 +210,7 @@ void ViewModelClass::nodeTempDelete()
 
     Fire_OnPropertyChanged("Change_Node");
 
-    //Sleep(1000);
+    Sleep(1000);
 
 }
 
@@ -287,7 +287,7 @@ void ViewModelClass::nodeChangeValue()
 
     Fire_OnPropertyChanged("Change_Node");
 
-    //Sleep(1000);
+    Sleep(1000);
 }
 
 
@@ -300,7 +300,7 @@ void ViewModelClass::nodeLeftRotate()
     State->set_num(FlashNode->Value);
     State->set_state(2);
     Fire_OnPropertyChanged("Rotate_Node");
-    //Sleep(1000);
+    Sleep(1000);
     State->set_state(0);
     Fire_OnPropertyChanged("Rotate_Node");
 }

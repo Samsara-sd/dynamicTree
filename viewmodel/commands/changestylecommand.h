@@ -1,8 +1,8 @@
 #ifndef CHANGESTYLECOMMAND_H
 #define CHANGESTYLECOMMAND_H
 
-#include "../common/etlbase.h"
-#include "../common/parameters.h"
+#include "common/etlbase.h"
+#include "common/parameters.h"
 
 class ViewModelClass;
 
