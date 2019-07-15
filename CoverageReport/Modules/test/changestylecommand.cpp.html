@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>changestylecommand.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "changestylecommand.h"
+
+#include "../viewmodel.h"
+
+<span style = "background-color:#dfd">ChangeStyleCommand::ChangeStyleCommand(ViewModelClass* p) throw() : m_pVM(p)
+{</span>
+
+<span style = "background-color:#dfd">}</span>
+
+void ChangeStyleCommand::SetParameter(const std::any &amp;param)
+<span style = "background-color:#fdd">{
+    datatype = std::any_cast&lt;std::string&gt;(param);
+}</span>
+
+void ChangeStyleCommand::Exec()
+<span style = "background-color:#fdd">{
+    bool bResult = m_pVM-&gt;modelChangeMode(datatype);
+    m_pVM-&gt;Fire_OnCommandComplete("ChangeType", bResult);</span>
+    return;
+<span style = "background-color:#fdd">}</span></pre>
+	</body>
+</html>

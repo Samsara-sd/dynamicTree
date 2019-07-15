@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>etlbase.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+ï»¿#ifndef ETL_H
+#define ETL_H
+
+
+#include &lt;memory&gt;
+#include &lt;any&gt;
+#include &lt;vector&gt;
+#include &lt;map&gt;
+#include &lt;stack&gt;
+#include &lt;array&gt;
+
+//types
+typedef unsigned char     uchar;
+typedef unsigned short    ushort;
+typedef unsigned int      uint;
+typedef unsigned __int64  uint64;
+typedef __int64           int64;
+
+//command
+
+/*
+class ICommandParameter
+{
+};
+*/
+
+class ICommandBase
+{
+public:
+	//virtual void SetParameter(const std::shared_ptr&lt;ICommandParameter&gt;&amp; param) = 0;
+	virtual void SetParameter(const std::any&amp; param) = 0;
+	virtual void Exec() = 0;
+/*
+virtual std::shared_ptr&lt;ICommandBase&gt; get_Undo() = 0;
+virtual std::shared_ptr&lt;ICommandBase&gt; get_Redo() = 0;
+//use make_shared, then the virtual destructor is not necessary. (RAII)
+*/
+};
+
+class CommandManager
+{
+public:
+/*
+...
+*/
+private:
+	std::vector&lt;std::shared_ptr&lt;ICommandBase&gt;&gt; m_vecUndo;
+	std::vector&lt;std::shared_ptr&lt;ICommandBase&gt;&gt; m_vecRedo;
+};
+
+//Notifications
+
+template &lt;class T&gt;
+class NotificationImpl
+{
+public:
+	void Clear() throw()
+	{
+		m_array.clear();
+	}
+	void AddNotification(const std::shared_ptr&lt;T&gt;&amp; p)
+<span style = "background-color:#dfd">	{
+		m_array.push_back(p);
+	}</span>
+	void RemoveNotification(const std::shared_ptr&lt;T&gt;&amp; p) throw()
+	{
+		auto iter(m_array.begin());
+		for( ; iter != m_array.end(); ++ iter ) {
+			if( (*iter).get() == p.get() ) {
+				m_array.erase(iter);
+				return ;
+			}
+		}
+	}
+
+protected:
+	std::vector&lt;std::shared_ptr&lt;T&gt;&gt; m_array;
+};
+
+class IPropertyNotification
+{
+public:
+	virtual void OnPropertyChanged(const std::string&amp; str) = 0;
+	//virtual void OnPropertyChanged(unsigned int uPropertyID) = 0;
+};
+
+class ICommandNotification
+{
+public:
+	virtual void OnCommandComplete(const std::string&amp; str, bool bOK) = 0;
+	//virtual void OnCommandComplete(unsigned int uCommandID, bool bOK) = 0;
+};
+
+template &lt;class T&gt;
+class Proxy_PropertyNotification : public NotificationImpl&lt;IPropertyNotification&gt;
+{
+public:
+	void AddPropertyNotification(const std::shared_ptr&lt;IPropertyNotification&gt;&amp; p)
+<span style = "background-color:#dfd">	{
+		AddNotification(p);
+	}</span>
+	void RemovePropertyNotification(const std::shared_ptr&lt;IPropertyNotification&gt;&amp; p) throw()
+	{
+		RemoveNotification(p);
+	}
+	void Fire_OnPropertyChanged(const std::string&amp; str)
+<span style = "background-color:#dfd">	{
+		auto iter(m_array.begin());
+		for( ; iter != m_array.end(); ++ iter ) {
+			(*iter)-&gt;OnPropertyChanged(str);
+		}
+	}</span>
+};
+template &lt;class T&gt;
+class Proxy_CommandNotification : public NotificationImpl&lt;ICommandNotification&gt;
+{
+public:
+	void AddCommandNotification(const std::shared_ptr&lt;ICommandNotification&gt;&amp; p)
+	{
+		AddNotification(p);
+	}
+	void RemoveCommandNotification(const std::shared_ptr&lt;ICommandNotification&gt;&amp; p) throw()
+	{
+		RemoveNotification(p);
+	}
+	void Fire_OnCommandComplete(const std::string&amp; str, bool bOK)
+<span style = "background-color:#fdd">	{
+		auto iter(m_array.begin());
+		for( ; iter != m_array.end(); ++ iter ) {
+			(*iter)-&gt;OnCommandComplete(str, bOK);
+		}
+	}</span>
+};
+
+//state machine
+
+class IStateBase
+{
+public:
+	virtual int Process(unsigned int uEvent, const std::any&amp; param) = 0;
+};
+
+class StateManager
+{
+public:
+	void Add(int iState, const std::shared_ptr&lt;IStateBase&gt;&amp; spState)
+	{
+		m_map.insert(std::pair&lt;int, std::shared_ptr&lt;IStateBase&gt;&gt;(iState, spState));
+	}
+	void SetStartState(int iStartState) throw()
+	{
+		m_iCurrentState = iStartState;
+	}
+	void Process(unsigned int uEvent, const std::any&amp; param)
+	{
+		auto iter(m_map.find(m_iCurrentState));
+		if( iter != m_map.end() )
+			m_iCurrentState = iter-&gt;second-&gt;Process(uEvent, param);
+	}
+	int GetCurrentState() const throw()
+	{
+		return m_iCurrentState;
+	}
+
+private:
+	int m_iCurrentState;
+	std::map&lt;int, std::shared_ptr&lt;IStateBase&gt;&gt; m_map;
+};
+
+#endif</pre>
+	</body>
+</html>

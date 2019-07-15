@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>deletenodecommand.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "deletenodecommand.h"
+
+#include "../viewmodel.h"
+
+<span style = "background-color:#dfd">DeleteNodeCommand::DeleteNodeCommand(ViewModelClass* p) throw() : NodeCommand(p)
+{
+}</span>
+
+void DeleteNodeCommand::Exec()
+<span style = "background-color:#fdd">{
+    bool bResult = m_pVM-&gt;modelDelete(m_param);
+    m_pVM-&gt;Fire_OnCommandComplete("Delete", bResult);
+}</span>
+</pre>
+	</body>
+</html>

@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>model.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#pragma once
+
+#include "../common/etlbase.h"
+#include "../common/treeInfo.h"
+
+typedef enum {BST, AVL, Splay, MinH, MaxH} controlMode;
+
+class ModelClass : public Proxy_PropertyNotification&lt;ModelClass&gt;
+{
+public:
+
+    ModelClass();
+
+    bool Insert(const int&amp; value);
+    bool Delete(const int&amp; value);
+    bool Find(const int&amp; value);
+    bool PreOrder();
+    bool PostOrder();
+    bool InOrder();
+    bool ChangeMode(std::string&amp; Mode);
+    TreeNode* GetFlashNode()const throw();
+    TreeNode* GetNowNode()const throw();
+
+private:
+    controlMode globalMode;
+    TreeNode* Treeptr;
+    TreeNode* FlashNode;
+    TreeNode* NowNode;
+
+    //BST
+    TreeNode* BST_Insert(TreeNode* T, ElementType X, int Index = 1);
+    TreeNode* BST_Delete(TreeNode* T, ElementType X);
+    void BST_Find(TreeNode* T, ElementType X);  //AVL
+
+    //AVL
+    TreeNode* AVL_Insert(TreeNode* T, ElementType X, int Index = 1);
+    TreeNode* AVL_Delete(TreeNode* T, ElementType X);
+    TreeNode* SingleLeftRotation(TreeNode* A);
+    TreeNode* SingleRightRotation(TreeNode* A);
+    TreeNode* DoubleLRRotation(TreeNode* A);
+    TreeNode* DoubleRLRotation(TreeNode* A);
+
+    //Spaly
+    TreeNode* Splay_Insert(TreeNode* T, ElementType X, int Index = 1);
+    TreeNode* Splay_Delete(TreeNode* T, ElementType X);
+    TreeNode* Splay_Find(TreeNode* T, ElementType X);
+    TreeNode* LLRotation(TreeNode* G);
+    TreeNode* LRRotation(TreeNode* G);
+    TreeNode* RRRotation(TreeNode* G);
+    TreeNode* RLRotation(TreeNode* G);
+    TreeNode* Splay(TreeNode* T, TreeNode* X);
+    TreeNode* Insertion(TreeNode* T, ElementType X, TreeNode** PX, int Index);
+    TreeNode* FindTree(TreeNode* T, ElementType X);
+
+    //common
+    void Tree_UpdateIndex(TreeNode* T, int Index);
+    void Tree_PostOrder(TreeNode* T);
+    void Tree_InOrder(TreeNode* T);
+    void Tree_PreOrder(TreeNode* T);
+    void Tree_DestroyTree(TreeNode* Root);
+    TreeNode* FindMax(TreeNode* T);
+<span style = "background-color:#dfd">    inline int Max(int A, int B){
+        return A&gt;B?A:B;
+    }</span>
+    int GetFactor(TreeNode* T);
+
+};</pre>
+	</body>
+</html>

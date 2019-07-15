@@ -1,0 +1,709 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>model.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "model.h"
+
+
+<span style = "background-color:#dfd">ModelClass::ModelClass(): globalMode(controlMode::BST), Treeptr(nullptr)
+{
+}</span>
+
+bool ModelClass::ChangeMode(std::string&amp; Mode)
+<span style = "background-color:#dfd">{
+    if(Mode == "Binary Search Tree"){
+        globalMode = controlMode::BST;</span>
+    }
+<span style = "background-color:#dfd">    else if (Mode == "AVL Tree") {
+        globalMode = controlMode::AVL;</span>
+    }
+<span style = "background-color:#dfd">    else {
+        globalMode = controlMode::Splay;</span>
+    }
+<span style = "background-color:#dfd">    Tree_DestroyTree(Treeptr);
+    Treeptr = nullptr;
+    return true;
+}</span>
+
+TreeNode* ModelClass::GetFlashNode() const throw()
+<span style = "background-color:#dfd">{
+    return FlashNode;
+}</span>
+
+TreeNode* ModelClass::GetNowNode() const throw()
+<span style = "background-color:#dfd">{
+    return NowNode;
+}</span>
+
+bool ModelClass::Insert(const int&amp; value)
+<span style = "background-color:#dfd">{
+    switch (globalMode)</span>
+    {
+        case controlMode::BST:
+        {
+<span style = "background-color:#dfd">            Treeptr = BST_Insert(Treeptr, value);
+            break;</span>
+        }
+        case controlMode::AVL:
+        {
+<span style = "background-color:#dfd">            Treeptr = AVL_Insert(Treeptr, value);
+            break;</span>
+        }
+        case controlMode::Splay:
+        {
+<span style = "background-color:#dfd">            Treeptr = Splay_Insert(Treeptr, value);</span>
+            break;
+        }
+
+        default:
+        {
+            break;
+        }
+    }
+
+<span style = "background-color:#dfd">    return true;
+}</span>
+
+bool ModelClass::Delete(const int&amp; value)
+<span style = "background-color:#dfd">{
+    switch (globalMode)</span>
+    {
+        case controlMode::BST:
+        {
+<span style = "background-color:#dfd">            Treeptr = BST_Delete(Treeptr, value);
+            break;</span>
+        }
+        case controlMode::AVL:
+        {
+<span style = "background-color:#dfd">            Treeptr = AVL_Delete(Treeptr, value);
+            break;</span>
+        }
+        case controlMode::Splay:
+        {
+<span style = "background-color:#dfd">            Treeptr = Splay_Delete(Treeptr, value);</span>
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+
+<span style = "background-color:#dfd">    return true;
+}</span>
+
+bool ModelClass::Find(const int&amp; value)
+<span style = "background-color:#dfd">{
+    switch (globalMode)</span>
+    {
+        case controlMode::BST:
+        case controlMode::AVL:
+        {
+<span style = "background-color:#dfd">            BST_Find(Treeptr, value);
+            break;</span>
+        }
+        case controlMode::Splay:
+        {
+<span style = "background-color:#dfd">            Treeptr = Splay_Find(Treeptr, value);</span>
+            break;
+        }
+        default:
+        {
+            break;
+        }
+    }
+<span style = "background-color:#dfd">    return true;
+}</span>
+
+bool ModelClass::PreOrder()
+<span style = "background-color:#dfd">{
+    Tree_PreOrder(Treeptr);</span>
+
+<span style = "background-color:#dfd">    return true;
+}</span>
+
+bool ModelClass::PostOrder()
+<span style = "background-color:#dfd">{
+    Tree_PostOrder(Treeptr);</span>
+
+<span style = "background-color:#dfd">    return true;
+}</span>
+
+bool ModelClass::InOrder()
+<span style = "background-color:#dfd">{
+    Tree_InOrder(Treeptr);</span>
+
+<span style = "background-color:#dfd">    return true;
+}</span>
+
+TreeNode* ModelClass::Splay_Insert(TreeNode *T, ElementType X, int Index)
+<span style = "background-color:#dfd">{</span>
+    TreeNode* PX;
+<span style = "background-color:#dfd">    T = Insertion(T, X, &amp;PX, Index);
+    T = PX = Splay(T, PX);
+    return T;
+}</span>
+
+TreeNode* ModelClass::Insertion(TreeNode* T, ElementType X, TreeNode** PX, int Index)
+<span style = "background-color:#dfd">{
+    if (T == nullptr) {
+        T = new TreeNode(X, Index);
+        *PX = T;</span>
+
+<span style = "background-color:#dfd">        NowNode = T;
+        Fire_OnPropertyChanged("Node_Insert");</span>
+    }
+<span style = "background-color:#dfd">    else {
+        FlashNode = T;
+        Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">        if (X &lt; T-&gt;Value)</span>
+        {
+<span style = "background-color:#dfd">            T-&gt;LeftChild = Insertion(T-&gt;LeftChild, X, PX, Index * 2);
+            T-&gt;LeftChild-&gt;Parent = T;</span>
+        }
+<span style = "background-color:#dfd">        else</span>
+        {
+<span style = "background-color:#dfd">            T-&gt;RightChild = Insertion(T-&gt;RightChild, X, PX, Index * 2 + 1);
+            T-&gt;RightChild-&gt;Parent = T;</span>
+        }
+    }
+<span style = "background-color:#dfd">    return T;
+}</span>
+
+TreeNode* ModelClass::Splay_Delete(TreeNode* T, ElementType X)
+<span style = "background-color:#dfd">{
+    if (T == nullptr) {</span>
+<span style = "background-color:#fdd">        throw "NO such element!";</span>
+    }
+<span style = "background-color:#dfd">    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">    T = Splay_Find(T, X);</span>
+
+<span style = "background-color:#dfd">    NowNode = T;
+    Fire_OnPropertyChanged("Node_Delete");
+    TreeNode* Temp = FindMax(T-&gt;LeftChild);
+    if (Temp == nullptr)</span>
+    {
+<span style = "background-color:#fdd">        Temp = T;
+        T = T-&gt;RightChild;</span>
+
+<span style = "background-color:#fdd">        NowNode = Temp;
+        Fire_OnPropertyChanged("Node_RecurDelete");</span>
+
+<span style = "background-color:#fdd">        if (T != nullptr) {
+            Tree_UpdateIndex(T, T-&gt;Index / 2);
+            NowNode = T;
+            Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+        }
+<span style = "background-color:#fdd">        if (T != nullptr &amp;&amp; Temp != nullptr)
+            T-&gt;Parent = Temp-&gt;Parent;</span>
+    }
+<span style = "background-color:#fdd">    else</span>
+    {
+<span style = "background-color:#dfd">        T-&gt;Value = Temp-&gt;Value;</span>
+
+<span style = "background-color:#dfd">        NowNode = T;
+        Fire_OnPropertyChanged("Node_ChangeValue");</span>
+
+<span style = "background-color:#dfd">        NowNode = T-&gt;LeftChild;
+        Fire_OnPropertyChanged("Node_RecurDelete");</span>
+
+<span style = "background-color:#dfd">        if (Temp-&gt;LeftChild != nullptr)</span>
+<span style = "background-color:#fdd">            Temp-&gt;LeftChild-&gt;Parent = Temp-&gt;Parent;</span>
+<span style = "background-color:#dfd">        if (Temp-&gt;Parent != nullptr) {
+            if (Temp == Temp-&gt;Parent-&gt;LeftChild)
+                Temp-&gt;Parent-&gt;LeftChild = Temp-&gt;LeftChild;
+            else
+                Temp-&gt;Parent-&gt;RightChild = Temp-&gt;LeftChild;</span>
+        }
+<span style = "background-color:#dfd">        Tree_UpdateIndex(T-&gt;LeftChild, 2);</span>
+
+<span style = "background-color:#dfd">        NowNode = T-&gt;LeftChild;
+        Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+    }
+<span style = "background-color:#dfd">    delete Temp;
+    return T;
+}</span>
+
+TreeNode* ModelClass::Splay_Find(TreeNode* T, ElementType X)
+<span style = "background-color:#dfd">{
+    TreeNode* TX = FindTree(T, X);
+    TX = Splay(T, TX);
+    return TX;
+}</span>
+
+TreeNode* ModelClass::FindTree(TreeNode* T, ElementType X)
+<span style = "background-color:#dfd">{
+    if (T == nullptr){
+        throw "No such element!";</span>
+    }
+    TreeNode* TreeX;
+<span style = "background-color:#dfd">    if (T-&gt;Value == X) {
+        TreeX = T;</span>
+
+<span style = "background-color:#dfd">        NowNode = T;
+        Fire_OnPropertyChanged("Node_Find");
+        return TreeX;</span>
+    }
+<span style = "background-color:#dfd">    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">    if (T-&gt;Value &lt; X)
+        TreeX = FindTree(T-&gt;RightChild, X);
+    else
+        TreeX = FindTree(T-&gt;LeftChild, X);
+    return TreeX;
+}</span>
+
+TreeNode* ModelClass::Splay(TreeNode* T, TreeNode* X)
+<span style = "background-color:#dfd">{
+    if (T == nullptr)</span>
+<span style = "background-color:#fdd">        return nullptr;</span>
+    TreeNode *P, *G;	//ParentTree, GrandParentTree
+<span style = "background-color:#dfd">    P = X-&gt;Parent;
+    while (P != nullptr)</span>
+    {
+<span style = "background-color:#dfd">        G = P-&gt;Parent;
+        if (X == P-&gt;LeftChild)</span>
+        {
+<span style = "background-color:#dfd">            if (G == nullptr)
+                X = SingleLeftRotation(P);
+            else if (P == G-&gt;LeftChild)
+                X = LLRotation(G);
+            else
+                X = RLRotation(G);</span>
+        }
+<span style = "background-color:#dfd">        else</span>
+        {
+<span style = "background-color:#dfd">            if (G == nullptr)</span>
+            {
+<span style = "background-color:#dfd">                X = SingleRightRotation(P);</span>
+            }
+<span style = "background-color:#dfd">            else if (P == G-&gt;RightChild)</span>
+            {
+<span style = "background-color:#fdd">                X = RRRotation(G);</span>
+            }
+<span style = "background-color:#fdd">            else</span>
+            {
+<span style = "background-color:#dfd">                X = LRRotation(G);</span>
+            }
+        }
+<span style = "background-color:#dfd">        P = X-&gt;Parent;
+    }
+    return X;
+}</span>
+
+
+TreeNode* ModelClass::LLRotation(TreeNode* G)
+<span style = "background-color:#dfd">{
+    return SingleLeftRotation(SingleLeftRotation(G));
+}</span>
+
+TreeNode* ModelClass::LRRotation(TreeNode* G)
+<span style = "background-color:#dfd">{
+    return SingleLeftRotation(SingleRightRotation(G-&gt;LeftChild)-&gt;Parent);
+}</span>
+
+TreeNode* ModelClass::RRRotation(TreeNode* G)
+<span style = "background-color:#fdd">{
+    return SingleRightRotation(SingleRightRotation(G));
+}</span>
+
+TreeNode* ModelClass::RLRotation(TreeNode* G)
+<span style = "background-color:#dfd">{
+    return SingleRightRotation(SingleLeftRotation(G-&gt;RightChild)-&gt;Parent);
+}</span>
+
+
+TreeNode* ModelClass::AVL_Insert(TreeNode* T, ElementType X, int Index)
+<span style = "background-color:#dfd">{
+    if(T == nullptr){
+        T = new TreeNode(X, Index);
+        NowNode = T;
+        Fire_OnPropertyChanged("Node_Insert");</span>
+    }
+<span style = "background-color:#dfd">    else {
+        FlashNode = T;
+        Fire_OnPropertyChanged("Node_Flash");
+        if(T-&gt;Value &gt; X){
+            T-&gt;LeftChild = AVL_Insert(T-&gt;LeftChild, X, Index*2);
+            if((GetFactor(T-&gt;LeftChild)-GetFactor(T-&gt;RightChild)) == 2){
+                if(X &lt; T-&gt;LeftChild-&gt;Value)</span>
+<span style = "background-color:#fdd">                    T = SingleLeftRotation(T);
+                else</span>
+<span style = "background-color:#dfd">                    T = DoubleLRRotation(T);</span>
+            }
+        }
+<span style = "background-color:#dfd">        else {
+            T-&gt;RightChild = AVL_Insert(T-&gt;RightChild, X, Index*2+1);
+            if((GetFactor(T-&gt;LeftChild)-GetFactor(T-&gt;RightChild)) == -2){
+                if(X &gt;= T-&gt;RightChild-&gt;Value)
+                    T = SingleRightRotation(T);
+                else
+                    T = DoubleRLRotation(T);</span>
+            }
+        }
+    }
+<span style = "background-color:#dfd">    if(T != nullptr) T-&gt;Factor = Max(GetFactor(T-&gt;LeftChild), GetFactor(T-&gt;RightChild))+1;
+    return T;
+}</span>
+
+TreeNode* ModelClass::AVL_Delete(TreeNode* T, ElementType X)
+<span style = "background-color:#dfd">{
+    if(T == nullptr){
+        throw "No such element!";</span>
+    }
+<span style = "background-color:#dfd">    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">    if(T-&gt;Value &gt; X){
+        T-&gt;LeftChild = AVL_Delete(T-&gt;LeftChild, X);
+        if((GetFactor(T-&gt;LeftChild) - GetFactor(T-&gt;RightChild)) == -2){</span>
+<span style = "background-color:#fdd">            if(T-&gt;RightChild-&gt;LeftChild == nullptr||</span>
+                    (GetFactor(T-&gt;RightChild-&gt;LeftChild) - GetFactor(T-&gt;RightChild-&gt;RightChild)) == -1){
+<span style = "background-color:#fdd">                T = SingleRightRotation(T);</span>
+            }
+<span style = "background-color:#fdd">            else {
+                T = DoubleRLRotation(T);</span>
+            }
+        }
+<span style = "background-color:#dfd">    }
+    else if (T-&gt;Value &lt; X) {
+        T-&gt;RightChild = AVL_Delete(T-&gt;RightChild, X);
+        if((GetFactor(T-&gt;LeftChild) - GetFactor(T-&gt;RightChild)) == 2){</span>
+<span style = "background-color:#fdd">            if(T-&gt;LeftChild-&gt;RightChild == nullptr||</span>
+                    (GetFactor(T-&gt;LeftChild-&gt;LeftChild) - GetFactor(T-&gt;LeftChild-&gt;RightChild)) == 1){
+<span style = "background-color:#fdd">                T = SingleLeftRotation(T);</span>
+            }
+<span style = "background-color:#fdd">            else {
+                T = DoubleLRRotation(T);</span>
+            }
+        }
+    }
+<span style = "background-color:#dfd">    else {
+        NowNode = T;
+        Fire_OnPropertyChanged("Node_Delete");</span>
+
+<span style = "background-color:#dfd">        if(T-&gt;LeftChild != nullptr &amp;&amp; T-&gt;RightChild != nullptr){
+            T-&gt;Value = (FindMax(T-&gt;LeftChild))-&gt;Value;
+            T-&gt;LeftChild = AVL_Delete(T-&gt;LeftChild, T-&gt;Value);
+            if((GetFactor(T-&gt;LeftChild) - GetFactor(T-&gt;RightChild)) == -2){
+                if(T-&gt;RightChild-&gt;LeftChild == nullptr||</span>
+                        (GetFactor(T-&gt;RightChild-&gt;LeftChild) - GetFactor(T-&gt;RightChild-&gt;RightChild)) == -1){
+<span style = "background-color:#dfd">                    T = SingleRightRotation(T);</span>
+                }
+<span style = "background-color:#dfd">                else {</span>
+<span style = "background-color:#fdd">                    T = DoubleRLRotation(T);</span>
+                }
+            }
+
+<span style = "background-color:#dfd">            NowNode = T;
+            Fire_OnPropertyChanged("Node_ChangeValue");</span>
+        }
+<span style = "background-color:#dfd">        else {
+            TreeNode* TempTreeNode = T;
+            T = (T-&gt;LeftChild != nullptr)? T-&gt;LeftChild : T-&gt;RightChild;</span>
+
+<span style = "background-color:#dfd">            NowNode = TempTreeNode;
+            Fire_OnPropertyChanged("Node_RecurDelete");</span>
+
+<span style = "background-color:#dfd">            if(T!=nullptr){
+                Tree_UpdateIndex(T,T-&gt;Index/2);</span>
+
+<span style = "background-color:#dfd">                NowNode = T;
+                Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+            }
+<span style = "background-color:#dfd">            delete TempTreeNode;</span>
+        }
+    }
+<span style = "background-color:#dfd">    if(T != nullptr){
+        T-&gt;Factor = Max(GetFactor(T-&gt;LeftChild), GetFactor(T-&gt;RightChild))+1;</span>
+    }
+<span style = "background-color:#dfd">    return T;
+}</span>
+
+TreeNode* ModelClass::SingleLeftRotation(TreeNode* A)
+<span style = "background-color:#dfd">{
+    FlashNode = A;
+    Fire_OnPropertyChanged("Left_Rotation");</span>
+
+<span style = "background-color:#dfd">    TreeNode* B = A-&gt;LeftChild;
+    TreeNode* TempNode = B-&gt;RightChild;</span>
+
+<span style = "background-color:#dfd">    if(A-&gt;Parent!=nullptr){
+        if(A == A-&gt;Parent-&gt;LeftChild){
+            A-&gt;Parent-&gt;LeftChild = B;</span>
+        }
+<span style = "background-color:#dfd">        else {
+            A-&gt;Parent-&gt;RightChild = B;</span>
+        }
+    }
+<span style = "background-color:#dfd">    B-&gt;Parent = A-&gt;Parent;
+    A-&gt;Parent = B;
+    if(TempNode!= nullptr){
+        TempNode-&gt;Parent = A;
+        NowNode = TempNode;
+        Fire_OnPropertyChanged("Node_RecurDelete");</span>
+    }
+
+<span style = "background-color:#dfd">    B-&gt;RightChild = nullptr;</span>
+
+<span style = "background-color:#dfd">    NowNode = A;
+    Fire_OnPropertyChanged("Node_RecurDelete");</span>
+
+<span style = "background-color:#dfd">    B-&gt;RightChild = A;
+    A-&gt;LeftChild = nullptr;
+    Tree_UpdateIndex(B, A-&gt;Index);</span>
+
+<span style = "background-color:#dfd">    NowNode = B;
+    Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+
+<span style = "background-color:#dfd">    A-&gt;LeftChild = TempNode;
+    Tree_UpdateIndex(TempNode, A-&gt;Index * 2);</span>
+
+<span style = "background-color:#dfd">    if(TempNode != nullptr){
+        NowNode = TempNode;
+        Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+    }
+
+<span style = "background-color:#dfd">    A-&gt;Factor = Max(GetFactor(A-&gt;LeftChild), GetFactor(A-&gt;RightChild)) + 1;
+    B-&gt;Factor = Max(GetFactor(B-&gt;LeftChild), GetFactor(B-&gt;RightChild)) + 1;</span>
+
+<span style = "background-color:#dfd">    return B;
+}</span>
+TreeNode* ModelClass::SingleRightRotation(TreeNode* A)
+<span style = "background-color:#dfd">{
+    FlashNode = A;
+    Fire_OnPropertyChanged("Right_Rotation");   //draw an arc
+    TreeNode* B = A-&gt;RightChild;
+    TreeNode* TempNode = B-&gt;LeftChild;</span>
+
+<span style = "background-color:#dfd">    if(A-&gt;Parent!=nullptr){ //update A's Parent's subtree
+        if(A == A-&gt;Parent-&gt;LeftChild){
+            A-&gt;Parent-&gt;LeftChild = B;</span>
+        }
+<span style = "background-color:#dfd">        else {</span>
+<span style = "background-color:#fdd">            A-&gt;Parent-&gt;RightChild = B;</span>
+        }
+    }
+<span style = "background-color:#dfd">    B-&gt;Parent = A-&gt;Parent;  //update B's parent
+    A-&gt;Parent = B;
+    if(TempNode!= nullptr){ //update TempNode's parent
+        TempNode-&gt;Parent = A;
+        NowNode = TempNode; //erase TempNode
+        Fire_OnPropertyChanged("Node_RecurDelete");</span>
+    }
+
+<span style = "background-color:#dfd">    B-&gt;LeftChild = nullptr;</span>
+
+<span style = "background-color:#dfd">    NowNode = A;
+    Fire_OnPropertyChanged("Node_RecurDelete"); //erase A and its subTree</span>
+
+<span style = "background-color:#dfd">    B-&gt;LeftChild = A;
+    A-&gt;RightChild = nullptr;
+    Tree_UpdateIndex(B, A-&gt;Index);</span>
+
+<span style = "background-color:#dfd">    NowNode = B;
+    Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+
+<span style = "background-color:#dfd">    A-&gt;RightChild = TempNode;
+    Tree_UpdateIndex(TempNode, A-&gt;Index * 2+1);
+    if(TempNode != nullptr)</span>
+    {
+<span style = "background-color:#dfd">        NowNode = TempNode;
+        Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+    }
+
+<span style = "background-color:#dfd">    A-&gt;Factor = Max(GetFactor(A-&gt;LeftChild), GetFactor(A-&gt;RightChild)) + 1;
+    B-&gt;Factor = Max(GetFactor(B-&gt;LeftChild), GetFactor(B-&gt;RightChild)) + 1;</span>
+
+<span style = "background-color:#dfd">    return B;
+}</span>
+
+TreeNode* ModelClass::DoubleLRRotation(TreeNode* A)
+<span style = "background-color:#dfd">{
+    A-&gt;LeftChild = SingleRightRotation(A-&gt;LeftChild);
+    return SingleLeftRotation(A);
+}</span>
+
+TreeNode* ModelClass::DoubleRLRotation(TreeNode* A)
+<span style = "background-color:#dfd">{
+    A-&gt;RightChild = SingleLeftRotation(A-&gt;RightChild);
+    return SingleRightRotation(A);
+}</span>
+
+int ModelClass::GetFactor(TreeNode *T)
+<span style = "background-color:#dfd">{
+    if(T == nullptr)
+        return -1;
+    return T-&gt;Factor;
+}</span>
+
+void ModelClass::Tree_DestroyTree(TreeNode* Root)
+<span style = "background-color:#dfd">{
+    if (Root == nullptr)
+        return;
+    Tree_DestroyTree(Root-&gt;LeftChild);
+    Tree_DestroyTree(Root-&gt;RightChild);
+    delete Root;
+}</span>
+
+void ModelClass::Tree_PostOrder(TreeNode* T)
+<span style = "background-color:#dfd">{
+    if (T == nullptr)
+        return;
+    Tree_PostOrder(T-&gt;LeftChild);
+    Tree_PostOrder(T-&gt;RightChild);
+    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");
+}</span>
+
+void ModelClass::Tree_PreOrder(TreeNode* T)
+<span style = "background-color:#dfd">{
+    if (T == nullptr)
+        return;</span>
+
+<span style = "background-color:#dfd">    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">    Tree_PreOrder(T-&gt;LeftChild);
+    Tree_PreOrder(T-&gt;RightChild);
+}</span>
+
+void ModelClass::Tree_InOrder(TreeNode* T)
+<span style = "background-color:#dfd">{
+    if (T == nullptr)
+        return;
+    Tree_InOrder(T-&gt;LeftChild);</span>
+
+<span style = "background-color:#dfd">    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">    Tree_InOrder(T-&gt;RightChild);
+}</span>
+
+void ModelClass::Tree_UpdateIndex(TreeNode* T, int Index)
+<span style = "background-color:#dfd">{
+    if (T == nullptr)
+        return;
+    T-&gt;Index = Index;
+    Tree_UpdateIndex(T-&gt;LeftChild, Index * 2);
+    Tree_UpdateIndex(T-&gt;RightChild, Index * 2 + 1);
+}</span>
+
+TreeNode* ModelClass::FindMax(TreeNode* T)
+<span style = "background-color:#dfd">{
+    if (T-&gt;RightChild != nullptr)
+        return FindMax(T-&gt;RightChild);
+    return T;
+}</span>
+
+void ModelClass::BST_Find(TreeNode* T, ElementType X)
+<span style = "background-color:#dfd">{
+    if (T == nullptr) {
+        throw "No such element";	//throw an excepion</span>
+    }
+<span style = "background-color:#dfd">    if (T-&gt;Value == X) {</span>
+
+<span style = "background-color:#dfd">        NowNode = T;
+        Fire_OnPropertyChanged("Node_Find");</span>
+
+<span style = "background-color:#dfd">        return;</span>
+    }
+
+<span style = "background-color:#dfd">    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">    if (T-&gt;Value &lt; X)
+        BST_Find(T-&gt;RightChild, X);
+    else
+        BST_Find(T-&gt;LeftChild, X);
+}</span>
+
+TreeNode* ModelClass::BST_Delete(TreeNode* T, ElementType X)
+<span style = "background-color:#dfd">{
+    if (T == nullptr) {
+        throw "No such element";	//throw an exception</span>
+    }
+
+<span style = "background-color:#dfd">    FlashNode = T;
+    Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">    if (T-&gt;Value &lt; X)
+        T-&gt;RightChild = BST_Delete(T-&gt;RightChild, X);
+    else if (T-&gt;Value &gt; X)
+        T-&gt;LeftChild = BST_Delete(T-&gt;LeftChild, X);
+    else</span>
+    {
+<span style = "background-color:#dfd">        NowNode = T;
+        Fire_OnPropertyChanged("Node_Delete");</span>
+
+<span style = "background-color:#dfd">        if (T-&gt;LeftChild != nullptr &amp;&amp; T-&gt;RightChild != nullptr)</span>
+        {
+<span style = "background-color:#dfd">            T-&gt;Value = (FindMax(T-&gt;LeftChild))-&gt;Value;
+            T-&gt;LeftChild = BST_Delete(T-&gt;LeftChild, T-&gt;Value);</span>
+
+<span style = "background-color:#dfd">            NowNode = T;
+            Fire_OnPropertyChanged("Node_ChangeValue");</span>
+
+        }
+<span style = "background-color:#dfd">        else</span>
+        {
+<span style = "background-color:#dfd">            TreeNode* TempTreeNode = T;
+            T = (T-&gt;LeftChild != nullptr) ? T-&gt;LeftChild : T-&gt;RightChild;</span>
+
+<span style = "background-color:#dfd">            NowNode = TempTreeNode;
+            Fire_OnPropertyChanged("Node_RecurDelete");</span>
+
+<span style = "background-color:#dfd">            if (T != nullptr)</span>
+            {
+<span style = "background-color:#dfd">                Tree_UpdateIndex(T, T-&gt;Index / 2);	//update the index of the nodes</span>
+
+<span style = "background-color:#dfd">                NowNode = T;
+                Fire_OnPropertyChanged("Node_RecurUpdate");</span>
+            }
+<span style = "background-color:#dfd">            delete TempTreeNode;</span>
+        }
+    }
+<span style = "background-color:#dfd">    return T;
+}</span>
+
+TreeNode* ModelClass::BST_Insert(TreeNode* T, ElementType X, int Index)
+<span style = "background-color:#dfd">{
+    if (T == nullptr)</span>
+    {
+
+<span style = "background-color:#dfd">        T = new TreeNode(X, Index);</span>
+
+<span style = "background-color:#dfd">        NowNode = T;</span>
+
+<span style = "background-color:#dfd">        Fire_OnPropertyChanged("Node_Insert");</span>
+
+    }
+<span style = "background-color:#dfd">    else</span>
+    {
+<span style = "background-color:#dfd">        FlashNode = T;
+        Fire_OnPropertyChanged("Node_Flash");</span>
+
+<span style = "background-color:#dfd">        if (T-&gt;Value &gt; X)</span>
+        {
+<span style = "background-color:#dfd">            T-&gt;LeftChild = BST_Insert(T-&gt;LeftChild, X, Index*2);</span>
+        }
+<span style = "background-color:#dfd">        else
+            T-&gt;RightChild = BST_Insert(T-&gt;RightChild, X, Index*2+1);</span>
+    }
+<span style = "background-color:#dfd">    return T;
+}</span>
+
+</pre>
+	</body>
+</html>

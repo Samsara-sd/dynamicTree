@@ -1,0 +1,92 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8"/>
+        <title>test.exe</title>
+        <link rel="stylesheet" type="text/css" href="third-party/css/style.css"/>
+        <script src="third-party/RGraph/libraries/RGraph.common.core.js" type="text/javascript"></script>
+        <script src="third-party/RGraph/libraries/RGraph.common.dynamic.js" type="text/javascript"></script>
+        <script src="third-party/RGraph/libraries/RGraph.common.tooltips.js" type="text/javascript"></script>
+        <script src="third-party/RGraph/libraries/RGraph.pie.js" type="text/javascript"></script>
+        <script src="third-party/JQuery/jquery-1.11.1.min.js"></script>
+    </head>
+    <body>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+            
+            new RGraph.Pie('pi_ed6daee1-26f8-42f6-adf1-72a76621472a', [808, 220])
+                .set('labels', ['Cover 78%','Uncover 22%'])
+                .set('colors', ['rgb(0,255,0)','rgb(255,0,0)'])
+                .set('linewidth', 1)
+                .set('shadow', true)
+                .set('tooltips', ['cover 808 lines (78%)', 'uncover 220 lines (22%)'])
+                .set('tooltips.event', 'onmousemove')
+                .set('labels.sticks', true)
+                .set('labels.sticks.length', 10)
+                .draw();
+            
+            new RGraph.Pie('pi_669e5062-f9c5-4f68-9502-d753fa13266c', [808, 220])
+                .set('labels', ['Cover 78%','Uncover 22%'])
+                .set('colors', ['rgb(0,255,0)','rgb(255,0,0)'])
+                .set('linewidth', 1)
+                .set('shadow', true)
+                .set('tooltips', ['cover 808 lines (78%)', 'uncover 220 lines (22%)'])
+                .set('tooltips.event', 'onmousemove')
+                .set('labels.sticks', true)
+                .set('labels.sticks.length', 10)
+                .draw();
+            
+
+      })
+    </script>    
+        <h1>
+        test.exe
+        </h1>
+        <h4>
+        
+        </h4>
+        <table id="rounded-corner">
+            <thead>
+                <tr>
+                    <th scope="col" class="rounded-left">Coverage</th>
+                    <th scope="col">Total lines</th>
+                    <th scope="col" class="rounded-right">Items</th>
+                </tr>
+            </thead> 
+            <tbody>
+                
+                <tr>
+                    <td>
+            <canvas id="pi_ed6daee1-26f8-42f6-adf1-72a76621472a" width="280" height="100">Cover 78%</canvas>
+                    </td>            
+                    <td>1028</td>
+                    <td>            
+                      
+                      test.exe
+                      
+                    </td>
+                </tr>        
+                
+                <tr>
+                    <td>
+            <canvas id="pi_669e5062-f9c5-4f68-9502-d753fa13266c" width="280" height="100">Cover 78%</canvas>
+                    </td>            
+                    <td>1028</td>
+                    <td>            
+                       <a href="Modules/test.html">C:\Users\13353\Desktop\dynamicTree\build-test-static-Debug\debug\test.exe</a> 
+                      
+                      
+                    </td>
+                </tr>        
+                
+            </tbody>
+            <tfoot>
+                <tr>
+                <td colspan="2" class="rounded-foot-left"></td>
+                <td class="rounded-foot-right"></td>
+                </tr>
+            </tfoot>            
+        </table>
+    </body>
+</html>

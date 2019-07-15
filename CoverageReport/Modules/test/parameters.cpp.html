@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>parameters.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "parameters.h"
+
+NodeState::NodeState() throw()
+<span style = "background-color:#dfd">{
+}</span>
+<span style = "background-color:#fdd">NodeState::NodeState(const NodeState&amp; src) : row_(src.get_row()), order(src.get_order()),num(src.get_num()),state(src.get_state())
+{
+}</span>
+NodeState::NodeState(NodeState&amp;&amp; src)
+<span style = "background-color:#fdd">{
+    row_ = (src.get_row());
+    order = (src.get_order());
+    num = (src.get_num());
+    state = (src.get_state());
+}</span>
+
+NodeState&amp; NodeState::operator=(const NodeState&amp; src)
+<span style = "background-color:#fdd">{
+	if( this != &amp;src ) {
+        row_ = (src.get_row());
+        order = (src.get_order());
+        num = (src.get_num());
+        state = (src.get_state());</span>
+	}
+<span style = "background-color:#fdd">	return *this;
+}</span>
+NodeState&amp; NodeState::operator=(NodeState&amp;&amp; src)
+<span style = "background-color:#fdd">{
+	if( this != &amp;src ) {
+        row_ = (src.get_row());
+        order = (src.get_order());
+        num = (src.get_num());
+        state = (src.get_state());</span>
+	}
+<span style = "background-color:#fdd">	return *this;
+}</span>
+
+const int&amp; NodeState::get_row() const throw()
+<span style = "background-color:#fdd">{
+    return row_;
+}</span>
+void NodeState::set_row(const int str)
+<span style = "background-color:#dfd">{
+    row_ = str;
+}</span>
+const int&amp; NodeState::get_order() const throw()
+<span style = "background-color:#fdd">{
+    return order;
+}</span>
+void NodeState::set_order(const int&amp; str)
+<span style = "background-color:#dfd">{
+    order = str;
+}</span>
+const int&amp; NodeState::get_num() const throw()
+<span style = "background-color:#fdd">{
+    return num;
+}</span>
+void NodeState::set_num(const int&amp; str)
+<span style = "background-color:#dfd">{
+    num = str;
+}</span>
+const int&amp; NodeState::get_state() const throw()
+<span style = "background-color:#fdd">{
+    return state;
+}</span>
+void NodeState::set_state(const int&amp; str)
+<span style = "background-color:#dfd">{
+    state = str;
+}</span></pre>
+	</body>
+</html>

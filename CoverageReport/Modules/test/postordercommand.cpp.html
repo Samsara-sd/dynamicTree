@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>postordercommand.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "postordercommand.h"
+
+#include "../viewmodel.h"
+
+<span style = "background-color:#dfd">PostOrderCommand::PostOrderCommand(ViewModelClass* p) throw() : m_pVM(p)
+{
+}</span>
+
+void PostOrderCommand::SetParameter(const std::any&amp; param)
+<span style = "background-color:#fdd">{
+}</span>
+
+void PostOrderCommand::Exec()
+<span style = "background-color:#fdd">{
+    bool bResult = m_pVM-&gt;modelPostOrder();
+    m_pVM-&gt;Fire_OnCommandComplete("Post Order", bResult);
+}</span>
+</pre>
+	</body>
+</html>

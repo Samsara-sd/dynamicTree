@@ -1,7 +1,6 @@
 #include "ViewModelSink.h"
 
 #include "../viewmodel.h"
-#include<QtDebug>
 
 ViewModelSink::ViewModelSink(ViewModelClass* p) throw() : m_pVM(p)
 {
@@ -41,7 +40,6 @@ void ViewModelSink::OnPropertyChanged(const std::string& str)
     else if( str == "Left_Rotation" ) {
         m_pVM->SetFlashNode(m_pVM->GetModel().GetFlashNode());
         m_pVM->nodeLeftRotate();
-        qDebug() << "33";
     }
     else if( str == "Right_Rotation" ) {
         m_pVM->SetFlashNode(m_pVM->GetModel().GetFlashNode());

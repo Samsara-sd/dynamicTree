@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>findnodecommand.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "findnodecommand.h"
+
+#include "../viewmodel.h"
+
+<span style = "background-color:#dfd">FindNodeCommand::FindNodeCommand(ViewModelClass* p) throw() : NodeCommand(p)
+{
+}</span>
+
+void FindNodeCommand::Exec()
+<span style = "background-color:#fdd">{
+    bool bResult = m_pVM-&gt;modelFind(m_param);
+    m_pVM-&gt;Fire_OnCommandComplete("Find", bResult);
+}</span></pre>
+	</body>
+</html>

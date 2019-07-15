@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>preordercommand.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "preordercommand.h"
+
+#include "../viewmodel.h"
+
+<span style = "background-color:#dfd">PreOrderCommand::PreOrderCommand(ViewModelClass* p) throw() : m_pVM(p)
+{
+}</span>
+
+void PreOrderCommand::SetParameter(const std::any&amp; param)
+<span style = "background-color:#fdd">{
+}</span>
+
+void PreOrderCommand::Exec()
+<span style = "background-color:#fdd">{
+    bool bResult = m_pVM-&gt;modelPreOrder();
+    m_pVM-&gt;Fire_OnCommandComplete("Pre Order", bResult);
+}</span>
+
+
+</pre>
+	</body>
+</html>

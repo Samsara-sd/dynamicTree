@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>viewmodelsink.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "ViewModelSink.h"
+
+#include "../viewmodel.h"
+
+<span style = "background-color:#dfd">ViewModelSink::ViewModelSink(ViewModelClass* p) throw() : m_pVM(p)
+{
+}</span>
+
+void ViewModelSink::OnPropertyChanged(const std::string&amp; str)
+<span style = "background-color:#dfd">{
+    if( str == "Node_Flash" ) {
+        m_pVM-&gt;SetFlashNode(m_pVM-&gt;GetModel().GetFlashNode());
+        m_pVM-&gt;nodeFlash();</span>
+	}
+<span style = "background-color:#dfd">    else if( str == "Node_Insert" ) {
+        m_pVM-&gt;SetNowNode(m_pVM-&gt;GetModel().GetNowNode());
+        m_pVM-&gt;nodeInsert();</span>
+    }
+<span style = "background-color:#dfd">    else if( str == "Node_Find" ) {
+        m_pVM-&gt;SetNowNode(m_pVM-&gt;GetModel().GetNowNode());
+        m_pVM-&gt;nodeFind();</span>
+    }
+<span style = "background-color:#dfd">    else if( str == "Node_Delete" ) {
+        m_pVM-&gt;SetNowNode(m_pVM-&gt;GetModel().GetNowNode());
+        m_pVM-&gt;nodeTempDelete();</span>
+    }
+<span style = "background-color:#dfd">    else if( str == "Node_ChangeValue" ) {
+        m_pVM-&gt;SetNowNode(m_pVM-&gt;GetModel().GetNowNode());
+        m_pVM-&gt;nodeChangeValue();</span>
+    }
+<span style = "background-color:#dfd">    else if( str == "Node_RecurDelete" ) {
+        m_pVM-&gt;SetNowNode(m_pVM-&gt;GetModel().GetNowNode());
+        m_pVM-&gt;nodeRecurDelete();</span>
+    }
+<span style = "background-color:#dfd">    else if( str == "Node_RecurUpdate" ) {
+        m_pVM-&gt;SetNowNode(m_pVM-&gt;GetModel().GetNowNode());
+        m_pVM-&gt;nodeRecurUpdate();</span>
+    }
+
+<span style = "background-color:#dfd">    else if( str == "Left_Rotation" ) {
+        m_pVM-&gt;SetFlashNode(m_pVM-&gt;GetModel().GetFlashNode());
+        m_pVM-&gt;nodeLeftRotate();</span>
+    }
+<span style = "background-color:#dfd">    else if( str == "Right_Rotation" ) {
+        m_pVM-&gt;SetFlashNode(m_pVM-&gt;GetModel().GetFlashNode());
+        m_pVM-&gt;nodeRightRotate();</span>
+    }
+
+
+<span style = "background-color:#dfd">}</span></pre>
+	</body>
+</html>

@@ -1,8 +1,8 @@
 #ifndef PREORDERCOMMAND_H
 #define PREORDERCOMMAND_H
 
-#include "common/etlbase.h"
-#include "common/parameters.h"
+#include "../common/etlbase.h"
+#include "../common/parameters.h"
 
 class ViewModelClass;
 

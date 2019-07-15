@@ -12,7 +12,7 @@
 #include "commands/changestylecommand.h"
 
 #include "sinks/ViewModelSink.h"
-#include "model/model.h"
+#include "../model/model.h"
 
 using NodeColor =  enum {hidden, normal, flash, insert, destory, find};
 

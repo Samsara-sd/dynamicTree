@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>treeinfo.h</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#pragma once
+using ElementType = int;
+
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+class TreeNode
+{
+    public:
+<span style = "background-color:#dfd">        TreeNode(ElementType X = 0, int index = 1)</span>
+        {
+<span style = "background-color:#dfd">            Value = X;
+            LeftChild = RightChild = Parent = nullptr;
+            Mark = false;
+            Factor = 0;
+            Index = index;
+        }</span>
+
+        ElementType Value;
+        TreeNode* LeftChild;
+        TreeNode* RightChild;
+        TreeNode* Parent;
+        bool Mark;
+        int Factor;
+        int Index;
+};</pre>
+	</body>
+</html>

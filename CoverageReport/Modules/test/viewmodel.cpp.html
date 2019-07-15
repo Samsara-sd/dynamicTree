@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <meta charset="utf-8"/>
+	    <title>viewmodel.cpp</title>
+	    <link href="../../third-party/google-code-prettify/prettify-CppCoverage.css" type="text/css" rel="stylesheet" />
+	    <script type="text/javascript" src="../../third-party/google-code-prettify/prettify.js"></script>
+	</head>
+	<body onload="prettyPrint()">
+        <h4></h4>
+		<pre class="prettyprint lang-cpp linenums">
+#include "viewmodel.h"
+
+<span style = "background-color:#dfd">ViewModelClass::ViewModelClass() : State(std::make_shared&lt;NodeState&gt;()),
+                                m_cmdInsert(std::make_shared&lt;InsertNodeCommand&gt;(this)),
+                                m_cmdDelete(std::make_shared&lt;DeleteNodeCommand&gt;(this)),
+                                m_cmdFind(std::make_shared&lt;FindNodeCommand&gt;(this)),
+                                m_cmdPreOrder(std::make_shared&lt;PreOrderCommand&gt;(this)),
+                                m_cmdPostOrder(std::make_shared&lt;PostOrderCommand&gt;(this)),
+                                m_cmdInOrder(std::make_shared&lt;InOrderCommand&gt;(this)),
+                                m_cmdChangeStyle(std::make_shared&lt;ChangeStyleCommand&gt;(this)),
+                                m_sink(std::make_shared&lt;ViewModelSink&gt;(this))
+{
+}</span>
+
+std::pair&lt;int, int&gt; ViewModelClass::ptrDecode(const TreeNode* const  ptr)
+<span style = "background-color:#dfd">{
+    int level = 1, order = 1;
+    while(2 * order &lt;= ptr-&gt;Index) {
+        level += 1;
+        order *= 2;
+    }
+    return std::make_pair(level, ptr-&gt;Index - order + 1);
+}</span>
+
+void ViewModelClass::SetModel(const std::shared_ptr&lt;ModelClass&gt;&amp; model)
+<span style = "background-color:#dfd">{</span>
+
+<span style = "background-color:#dfd">    Model = model;
+    Model-&gt;AddPropertyNotification(std::static_pointer_cast&lt;IPropertyNotification&gt;(m_sink));
+}</span>
+
+
+std::shared_ptr&lt;ICommandBase&gt; ViewModelClass::get_InsertCommand() throw()
+<span style = "background-color:#fdd">{
+    return std::static_pointer_cast&lt;ICommandBase&gt;(m_cmdInsert);
+}</span>
+
+std::shared_ptr&lt;ICommandBase&gt; ViewModelClass::get_DeleteCommand() throw()
+<span style = "background-color:#fdd">{
+    return std::static_pointer_cast&lt;ICommandBase&gt;(m_cmdDelete);
+}</span>
+
+std::shared_ptr&lt;ICommandBase&gt; ViewModelClass::get_FindCommand() throw()
+<span style = "background-color:#fdd">{
+    return std::static_pointer_cast&lt;ICommandBase&gt;(m_cmdFind);
+}</span>
+
+std::shared_ptr&lt;ICommandBase&gt; ViewModelClass::get_PreOrderCommand() throw()
+<span style = "background-color:#fdd">{
+    return std::static_pointer_cast&lt;ICommandBase&gt;(m_cmdPreOrder);
+}</span>
+
+std::shared_ptr&lt;ICommandBase&gt; ViewModelClass::get_PostOrderCommand() throw()
+<span style = "background-color:#fdd">{
+    return std::static_pointer_cast&lt;ICommandBase&gt;(m_cmdPostOrder);
+}</span>
+
+std::shared_ptr&lt;ICommandBase&gt; ViewModelClass::get_InOrderCommand() throw()
+<span style = "background-color:#fdd">{
+    return std::static_pointer_cast&lt;ICommandBase&gt;(m_cmdInOrder);
+}</span>
+
+
+std::shared_ptr&lt;ICommandBase&gt; ViewModelClass::get_ChangeStyleCommand() throw()
+<span style = "background-color:#fdd">{
+    return std::static_pointer_cast&lt;ICommandBase&gt;(m_cmdChangeStyle);
+}</span>
+
+ModelClass&amp; ViewModelClass::GetModel() throw()
+<span style = "background-color:#dfd">{
+    return *Model;
+}</span>
+
+void ViewModelClass::SetFlashNode(TreeNode* Node)
+<span style = "background-color:#dfd">{
+    FlashNode = Node;
+}</span>
+
+void ViewModelClass::SetNowNode(TreeNode* Node)
+<span style = "background-color:#dfd">{
+    NowNode = Node;
+}</span>
+
+std::shared_ptr&lt;NodeState&gt; ViewModelClass::GetNode() const throw()
+<span style = "background-color:#fdd">{
+    return State;
+}</span>
+
+bool ViewModelClass::modelInsert(const int&amp; num)
+<span style = "background-color:#dfd">{
+    return Model-&gt;Insert(num);
+}</span>
+
+
+bool ViewModelClass::modelDelete(const int&amp; num)
+<span style = "background-color:#dfd">{
+    try</span>
+    {
+<span style = "background-color:#dfd">        return Model-&gt;Delete(num);</span>
+    }
+    catch(const char* arr)
+    {
+<span style = "background-color:#dfd">        return false;</span>
+<span style = "background-color:#fdd">    }</span>
+
+<span style = "background-color:#dfd">}</span>
+
+bool ViewModelClass::modelFind(const int&amp; num)
+<span style = "background-color:#dfd">{</span>
+
+<span style = "background-color:#dfd">    try</span>
+    {
+<span style = "background-color:#dfd">        return Model-&gt;Find(num);</span>
+    }
+    catch(const char* arr)
+    {
+<span style = "background-color:#dfd">        return false;</span>
+<span style = "background-color:#fdd">    }</span>
+
+<span style = "background-color:#dfd">}</span>
+
+bool ViewModelClass::modelPreOrder()
+<span style = "background-color:#dfd">{
+    return Model-&gt;PreOrder();
+}</span>
+
+bool ViewModelClass::modelInOrder()
+<span style = "background-color:#dfd">{
+    return Model-&gt;InOrder();
+}</span>
+
+bool ViewModelClass::modelPostOrder()
+<span style = "background-color:#dfd">{
+    return Model-&gt;PostOrder();
+}</span>
+
+
+bool ViewModelClass::modelChangeMode(std::string&amp; datatype)
+<span style = "background-color:#dfd">{
+    return Model-&gt;ChangeMode(datatype);
+}</span>
+
+
+void ViewModelClass::nodeFlash()
+<span style = "background-color:#dfd">{
+    auto location = ptrDecode(FlashNode);
+    int num = location.first;</span>
+
+<span style = "background-color:#dfd">    State-&gt;set_row(num);
+    State-&gt;set_order(location.second);
+    State-&gt;set_num(FlashNode-&gt;Value);
+    State-&gt;set_state(NodeColor::flash);</span>
+
+<span style = "background-color:#dfd">    Fire_OnPropertyChanged("Change_Node");</span>
+
+    //Sleep(600);
+
+<span style = "background-color:#dfd">    State-&gt;set_state(NodeColor::normal);
+    Fire_OnPropertyChanged("Change_Node");</span>
+
+<span style = "background-color:#dfd">}</span>
+
+void ViewModelClass::nodeInsert()
+<span style = "background-color:#dfd">{
+    auto location = ptrDecode(NowNode);
+    int num = location.first;</span>
+
+<span style = "background-color:#dfd">    State-&gt;set_row(num);
+    State-&gt;set_order(location.second);
+    State-&gt;set_num(NowNode-&gt;Value);
+    State-&gt;set_state(NodeColor::insert);</span>
+
+<span style = "background-color:#dfd">    Fire_OnPropertyChanged("Change_Node");</span>
+
+    //Sleep(1500);
+
+<span style = "background-color:#dfd">    State-&gt;set_state(NodeColor::normal);
+    Fire_OnPropertyChanged("Change_Node");</span>
+
+<span style = "background-color:#dfd">}</span>
+
+void ViewModelClass::nodeFind()
+<span style = "background-color:#dfd">{
+    auto location = ptrDecode(NowNode);
+    int num = location.first;</span>
+
+<span style = "background-color:#dfd">    State-&gt;set_row(num);
+    State-&gt;set_order(location.second);
+    State-&gt;set_num(NowNode-&gt;Value);
+    State-&gt;set_state(NodeColor::find);</span>
+
+<span style = "background-color:#dfd">    Fire_OnPropertyChanged("Change_Node");</span>
+
+    //Sleep(1500);
+
+<span style = "background-color:#dfd">    State-&gt;set_state(NodeColor::normal);
+    Fire_OnPropertyChanged("Change_Node");</span>
+
+<span style = "background-color:#dfd">}</span>
+
+void ViewModelClass::nodeTempDelete()
+<span style = "background-color:#dfd">{
+    auto location = ptrDecode(NowNode);
+    int num = location.first;</span>
+
+<span style = "background-color:#dfd">    State-&gt;set_row(num);
+    State-&gt;set_order(location.second);
+    State-&gt;set_num(NowNode-&gt;Value);
+    State-&gt;set_state(NodeColor::destory);</span>
+
+<span style = "background-color:#dfd">    Fire_OnPropertyChanged("Change_Node");</span>
+
+    //Sleep(1000);
+
+<span style = "background-color:#dfd">}</span>
+
+void ViewModelClass::nodeRecurDelete()
+<span style = "background-color:#dfd">{
+    nodeRecurDelete_in(NowNode);
+}</span>
+
+void ViewModelClass::nodeRecurUpdate()
+<span style = "background-color:#dfd">{
+    nodeRecurUpdate_in(NowNode);
+}</span>
+
+void ViewModelClass::nodeRecurDelete_in(const TreeNode* const ptr)
+<span style = "background-color:#dfd">{
+    if(ptr != nullptr)</span>
+    {
+<span style = "background-color:#dfd">        auto location = ptrDecode(ptr);
+        int num = location.first;</span>
+
+<span style = "background-color:#dfd">        State-&gt;set_row(num);
+        State-&gt;set_order(location.second);
+        State-&gt;set_num(ptr-&gt;Value);
+        State-&gt;set_state(NodeColor::hidden);</span>
+
+<span style = "background-color:#dfd">        Fire_OnPropertyChanged("Change_Node");</span>
+
+<span style = "background-color:#dfd">        if(ptr-&gt;LeftChild != nullptr)</span>
+        {
+<span style = "background-color:#dfd">            nodeRecurDelete_in(ptr-&gt;LeftChild);</span>
+        }
+<span style = "background-color:#dfd">        if(ptr-&gt;RightChild != nullptr)</span>
+        {
+<span style = "background-color:#dfd">            nodeRecurDelete_in(ptr-&gt;RightChild);</span>
+        }
+    }
+<span style = "background-color:#dfd">}</span>
+
+void ViewModelClass::nodeRecurUpdate_in(const TreeNode* const ptr)
+<span style = "background-color:#dfd">{</span>
+
+<span style = "background-color:#dfd">    if(ptr != nullptr)</span>
+    {
+<span style = "background-color:#dfd">        auto location = ptrDecode(ptr);
+        int num = location.first;</span>
+
+<span style = "background-color:#dfd">        State-&gt;set_row(num);
+        State-&gt;set_order(location.second);
+        State-&gt;set_num(ptr-&gt;Value);
+        State-&gt;set_state(NodeColor::normal);</span>
+
+<span style = "background-color:#dfd">        Fire_OnPropertyChanged("Change_Node");</span>
+
+<span style = "background-color:#dfd">        if(ptr-&gt;LeftChild != nullptr)</span>
+        {
+<span style = "background-color:#dfd">            nodeRecurUpdate_in(ptr-&gt;LeftChild);</span>
+        }
+<span style = "background-color:#dfd">        if(ptr-&gt;RightChild != nullptr)</span>
+        {
+<span style = "background-color:#dfd">            nodeRecurUpdate_in(ptr-&gt;RightChild);</span>
+        }
+    }
+<span style = "background-color:#dfd">}</span>
+
+void ViewModelClass::nodeChangeValue()
+<span style = "background-color:#dfd">{
+    auto location = ptrDecode(NowNode);
+    int num = location.first;</span>
+
+<span style = "background-color:#dfd">    State-&gt;set_row(num);
+    State-&gt;set_order(location.second);
+    State-&gt;set_num(NowNode-&gt;Value);
+    State-&gt;set_state(NodeColor::normal);</span>
+
+<span style = "background-color:#dfd">    Fire_OnPropertyChanged("Change_Node");</span>
+
+    //Sleep(1000);
+<span style = "background-color:#dfd">}</span>
+
+
+void ViewModelClass::nodeLeftRotate()
+<span style = "background-color:#dfd">{
+    auto location = ptrDecode(FlashNode);
+    int num = location.first;
+    State-&gt;set_row(num);
+    State-&gt;set_order(location.second);
+    State-&gt;set_num(FlashNode-&gt;Value);
+    State-&gt;set_state(2);
+    Fire_OnPropertyChanged("Rotate_Node");</span>
+    //Sleep(1000);
+<span style = "background-color:#dfd">    State-&gt;set_state(0);
+    Fire_OnPropertyChanged("Rotate_Node");
+}</span>
+
+void ViewModelClass::nodeRightRotate()
+<span style = "background-color:#dfd">{
+    auto location = ptrDecode(FlashNode);
+    int num = location.first;</span>
+
+<span style = "background-color:#dfd">    State-&gt;set_row(num);
+    State-&gt;set_order(location.second);
+    State-&gt;set_num(FlashNode-&gt;Value);
+    State-&gt;set_state(1);</span>
+
+<span style = "background-color:#dfd">    Fire_OnPropertyChanged("Rotate_Node");</span>
+
+   // Sleep(1000);
+
+<span style = "background-color:#dfd">    State-&gt;set_state(0);
+    Fire_OnPropertyChanged("Rotate_Node");
+}</span>
+
+</pre>
+	</body>
+</html>
